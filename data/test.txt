@@ -1,1 +1,69 @@
+##Assignment from 604
+##QUESTION 1
+##First I need to enter an address since I got an error on the address_id FK
+##Also learn how to put coordinates into location
+
+INSERT into address (address, district, city_id, postal_code, phone, location)
+VALUES ('28 Park Terrace', 'Upper Montclair', 300, '07043', '555-0001', ST_GeomFromText('POINT(-74.2090 40.8259)'));
+
+##Now let me get the address_ID I need for the insert
+
+select address_id from address where address="28 Park Terrace";
+
+## Use this value for address_id in the insert
+INSERT into customer(first_name,last_name,email,store_id,active, address_id) values ("JOhn","Doe","john.doe@example.com",2,1,606);
+
+##QUESTION 2
+INSERT into FILM (title,description,release_year,language_id,rental_duration,rental_rate,replacement_cost) 
+VALUES ('Code Masters', 'A movie about the world of coding', 2024, 1, 7, 2.99, 19.99);
+
+##QUESTION 3
+INSERT INTO actor (first_name, last_name)
+VALUES ('Emily', 'Blunt');
+
+##QUESTION 4
+SELECT first_name, last_name, email
+from customer WHERE active = 1;
+
+##QUESTION 5
+SELECT f.title FROM rental r JOIN inventory i on r.inventory_id = i.inventory_id
+JOIN film f ON i.film_id = f.film_id
+where r.customer_id = 3;
+
+##QUESTION 6
+SELECT title, description, release_year FROM film
+where description LIKE '%Adventure%';
+
+##QUESTION 7
+UPDATE film SET rental_rate = rental_rate + 0.50
+where rental_rate < 2.00;
+
+##QUESTION 8
+DELETE FROM film
+where title = 'Code Masters';
+
+##QUESTION 9
+DELETE FROM rental
+WHERE rental_date < '2020-05-16';
+
+##QUESTION 10
+SELECT title, description from film
+where release_year = 2006;
+
+##QUESTION 11
+SELECT c.first_name, c.last_name, c.email FROM customer a
+LEFT JOIN rental b ON a.customer_id = b.customer_id
+WHERE b.rental_id IS NULL;
+
+##QUESTION 12
+SELECT c.name, COUNT(f.film_id) AS film_count
+FROM category c
+JOIN film_category f ON c.category_id = f.category_id
+GROUP BY c.name;
+
+##QUESTION 13
+SELECT c.store_id, SUM(p.amount) FROM payment p
+JOIN customer c ON p.customer_id = c.customer_id
+GROUP BY c.store_id;
+
 
